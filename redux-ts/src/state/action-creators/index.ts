@@ -9,7 +9,16 @@ const searchRepositories = (term: string) => {
     });
 
     try {
-      
+      const { data } = await axios.get('https://registry.npmjs.org/-/v1/search', {
+        params: {
+          text: term
+        }
+      });
+
+      data.objects.map((result: any) => {
+        return result.package.name;
+      });
+
     } catch (err) {
       if (err instanceof Error) {
         dispatch({
