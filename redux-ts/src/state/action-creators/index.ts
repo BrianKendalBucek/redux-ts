@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ActionType } from '../action-types';
 import { Action } from '../actions';
 
-const searchRepositories = (term: string) => {
+export const searchRepositories = (term: string) => {
   return async (dispatch: any) => {
     dispatch({
       type: ActionType.SEARCH_REPOSITORIES
@@ -15,10 +15,14 @@ const searchRepositories = (term: string) => {
         }
       });
 
-      data.objects.map((result: any) => {
+      const names = data.objects.map((result: any) => {
         return result.package.name;
       });
 
+      dispatch({
+        type:ActionType.SEARCH_REPOSITORIES_SUCCESS,
+        payload: names
+      })
     } catch (err) {
       if (err instanceof Error) {
         dispatch({
